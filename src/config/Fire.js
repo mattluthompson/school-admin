@@ -30,5 +30,3 @@ var firebaseConfig = {
 //   export default fire;
 
   export {base};
-
-  console.log(process.env.REACT_APP_FIREBASE_KEY)

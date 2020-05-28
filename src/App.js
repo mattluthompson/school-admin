@@ -4,55 +4,63 @@ import './App.css';
 import Login from "./Login";
 import Home from "./Home";
 import {base} from "./config/Fire.js";
+import StudentSignUp from "./StudentSignUp";
+import TeacherSignUp from "./TeacherSignUp";
+
+// TODO: Account for if there are no users 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // user: {}
-      users: {}
+      admins: [],
+      teachers: [],
+      students: [], 
     }
-
-    this.addMatt = this.addMatt.bind(this);
-    this.addMegan = this.addMegan.bind(this);
   }
 
-  addMatt() {
-    const users = {...this.state.user};
-    const id = 1;
-
-    users[id] = {
-      id: id,
-      name: "Matt"
-    };
-
-    this.setState({users});
-    console.log(this.state)
+  createStudent = (studentID, firstName, lastName) => {
+    if(this.state.students[studentID]) {
+      alert("Student ID already taken")
+    } else {
+      const students = {...this.state.student};
+      students[studentID] = {
+        firstName: firstName,
+        lastName: lastName,
+        hasTeacher: false
+      };
+      this.setState({students});
+    }
   }
 
-  addMegan() {
-    const users = {...this.state.user};
-    const id = 3;
-
-    users[id] = {
-      id: id,
-      name: "Megan"
-    };
-
-    this.setState({users});
-    console.log(this.state)
+  createTeacher = (ID, firstName, lastName) => {
+    if(this.state.teachers[ID]) {
+      alert("Teacher ID already taken")
+    } else {
+      const teachers = {...this.state.teacher};
+      teachers[ID] = {
+        firstName: firstName,
+        lastName: lastName,
+        classList: ['no students added yet']
+      };
+      this.setState({teachers});
+    }
   }
 
   componentWillMount(){
-    this.usersRef = base.syncState('users',{
+    this.studentsRef = base.syncState('students',{
       context: this,
-      state: 'users'
+      state: 'students'
     });
-
+    this.teachersRef = base.syncState('teachers',{
+      context: this,
+      state: 'teachers'
+    });
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.usersRef);
+    base.removeBinding(this.studentsRef);
+    base.removeBinding(this.teachersRef);
   }
   // componentDidMount() {
   //   // this.authListener();
@@ -76,8 +84,8 @@ class App extends Component {
       <div className="App">
         {/* {this.state.user ? (<Home/>) : (<Login />)} */}
         <Home />
-        <button onClick = {this.addMatt}>Add Matt</button>
-        <button onClick = {this.addMegan}>Add Megan</button>
+        <StudentSignUp create = {this.createStudent} />
+        <TeacherSignUp create = {this.createTeacher} />
       </div>
     );
   }
