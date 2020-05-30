@@ -4,10 +4,8 @@ import './App.css';
 import Login from "./Login";
 import Home from "./Home";
 import {base} from "./config/Fire.js";
-import StudentSignUp from "./StudentSignUp";
-import TeacherSignUp from "./TeacherSignUp";
 
-// TODO: Account for if there are no users 
+// TODO: Connect teacher class list as attribute
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +14,7 @@ class App extends Component {
       admins: [],
       teachers: [],
       students: [], 
+      classes: []
     }
   }
 
@@ -27,7 +26,7 @@ class App extends Component {
       students[studentID] = {
         firstName: firstName,
         lastName: lastName,
-        hasTeacher: false
+        currentTeacherID: 0
       };
       this.setState({students});
     }
@@ -41,9 +40,23 @@ class App extends Component {
       teachers[ID] = {
         firstName: firstName,
         lastName: lastName,
-        classList: ['no students added yet']
+        classList: []
       };
       this.setState({teachers});
+    }
+  }
+
+  createClass = (ID, teacher, name) => {
+    if(this.state.classes[ID]){
+      alert("Class ID already taken")
+    } else {
+      const classes = {...this.state.class};
+      classes[ID] = {
+        teacher: teacher,
+        name: name,
+        students: []
+      };
+      this.setState({classes});
     }
   }
 
@@ -56,11 +69,16 @@ class App extends Component {
       context: this,
       state: 'teachers'
     });
+    this.classesRef = base.syncState('classes', {
+      context: this,
+      state: 'classes'
+    });
   }
 
   componentWillUnmount() {
     base.removeBinding(this.studentsRef);
     base.removeBinding(this.teachersRef);
+    base.removeBinding(this.classesRef);
   }
   // componentDidMount() {
   //   // this.authListener();
@@ -83,9 +101,8 @@ class App extends Component {
     return (
       <div className="App">
         {/* {this.state.user ? (<Home/>) : (<Login />)} */}
-        <Home />
-        <StudentSignUp create = {this.createStudent} />
-        <TeacherSignUp create = {this.createTeacher} />
+        <Home studentsList = {this.state.students} teachersList = {this.state.teachers} 
+        createStudent = {this.createStudent} createTeacher = {this.createTeacher} createClass = {this.createClass} />
       </div>
     );
   }
