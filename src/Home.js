@@ -28,7 +28,7 @@ class Home extends Component {
         return(
             <div>
                 <button onClick = {this.toggleSignUp}>Add Member</button><br/>
-                {this.state.isSignUp ? <SignUp createStudent = {this.props.createStudent} createTeacher = {this.props.createTeacher} createClass = {this.props.createClass} teachers = {this.props.teachersList} /> : null}<br/>
+                {this.state.isSignUp ? <SignUp createStudent = {this.props.createStudent} createTeacher = {this.props.createTeacher} createClass = {this.props.createClass} teachers = {this.props.teachersList} editTeacher = {this.props.editTeacher} /> : null}<br/>
                 <button onClick = {this.toggleStudentView}>View List of All Enrolled Students</button>
                 {this.state.isStudentView ? <UserList className = "studentList" list = {this.props.studentsList}/> : null}
                 <AssignStudent />

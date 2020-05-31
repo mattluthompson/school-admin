@@ -23,11 +23,18 @@ class ClassSignUp extends Component {
         this.setState({
           [name]: value
         });
-        console.log(this.state)
     }
     
     handleSubmit = (event) => {
-        this.props.create(this.state.classID, this.state.classTeacher, this.state.className);
+        let teacherObject = {ID: this.state.classTeacher.ID, firstName: this.state.classTeacher.firstName, lastName: this.state.classTeacher.lastName}
+        this.props.create(this.state.classID, teacherObject, this.state.className);
+        
+        let classObject = {
+          ID: this.state.classID,
+          name: this.state.className
+        }
+
+        this.props.editTeacher(this.state.classTeacher.ID, null, null, classObject, null);
         event.preventDefault();
     }
 
@@ -43,9 +50,9 @@ class ClassSignUp extends Component {
             </label><br /><br />
             <label>
                     Teacher:{" "}
-                    <select  name = "classTeacher" onChange = {this.handleInputChange}>
+                    <select  name = "classTeacher" onChange = {this.handleInputChange} required>
                         {mapList(this.props.teachers).map((teacher, index) => {
-                          return <option key = {index}>{"("+teacher[0]+") "+teacher[3]+", "+teacher[2]}</option>
+                          return <option key = {index}>{"("+teacher[1]+") "+teacher[4]+", "+teacher[3]}</option>
                         })}
                     </select>
               </label><br /><br />

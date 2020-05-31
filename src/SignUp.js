@@ -39,7 +39,7 @@ class SignUp extends Component {
                 <button onClick = {this.toggleTeacherSignUp}>Sign a Teacher Up</button>
                 {this.state.isTeacher ? <TeacherSignUp create = {this.props.createTeacher} /> : null}
                 <button onClick = {this.toggleClassSignUp}>Create a Class</button>
-                {this.state.isClass ? <ClassSignUp create = {this.props.createClass} teachers =  {this.props.teachers}/> : null}
+                {this.state.isClass ? <ClassSignUp create = {this.props.createClass} teachers =  {this.props.teachers} editTeacher = {this.props.editTeacher} /> : null}
             </div>
         );
     }

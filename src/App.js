@@ -18,15 +18,18 @@ class App extends Component {
     }
   }
 
+  // Create Functions
+
   createStudent = (studentID, firstName, lastName) => {
     if(this.state.students[studentID]) {
       alert("Student ID already taken")
     } else {
       const students = {...this.state.student};
       students[studentID] = {
+        ID: studentID,
         firstName: firstName,
         lastName: lastName,
-        currentTeacherID: 0
+        currentTeacher: ["no current teachers"]
       };
       this.setState({students});
     }
@@ -38,13 +41,16 @@ class App extends Component {
     } else {
       const teachers = {...this.state.teacher};
       teachers[ID] = {
+        ID: ID,
         firstName: firstName,
         lastName: lastName,
-        classList: []
+        classList: ["no current classes"]
       };
       this.setState({teachers});
     }
   }
+
+  createAdmin = () => {}
 
   createClass = (ID, teacher, name) => {
     if(this.state.classes[ID]){
@@ -52,13 +58,68 @@ class App extends Component {
     } else {
       const classes = {...this.state.class};
       classes[ID] = {
+        ID: ID,
         teacher: teacher,
         name: name,
-        students: []
+        students: ["no current students"]
       };
       this.setState({classes});
     }
   }
+
+  // Edit Functions
+  
+  editStudent = () => {}
+
+  editTeacher = (ID, firstName, lastName, addClassList, deleteClassList) => {
+
+    let currentTeacherList = this.state.teachers
+    let currentTeacher = currentTeacherList[ID];
+    
+    if(firstName){
+      // teachers[ID] = {
+      //   firstName: firstName,
+      // };
+    };
+
+    if(lastName){
+      // teachers[ID] = {
+      //   lastName: lastName,
+      // };
+    };
+
+    if(addClassList){
+      if(currentTeacher.classList[0] === "no current classes") {
+        currentTeacher.classList[0] = addClassList;
+      } else {
+        currentTeacher.classList.push(addClassList);
+      }
+    };
+
+    if (deleteClassList) {
+
+    };
+
+    currentTeacherList[ID] = currentTeacher;
+
+    this.setState({
+      teachers: currentTeacherList
+    })
+  }
+
+  editAdmin = () => {}
+
+  editClass = () => {}
+
+  // Delete
+
+  deleteStudent = () => {}
+
+  deleteTeacher = () => {}
+
+  deleteAdmin = () => {}
+
+  deleteClass = () => {}
 
   componentWillMount(){
     this.studentsRef = base.syncState('students',{
@@ -102,7 +163,8 @@ class App extends Component {
       <div className="App">
         {/* {this.state.user ? (<Home/>) : (<Login />)} */}
         <Home studentsList = {this.state.students} teachersList = {this.state.teachers} 
-        createStudent = {this.createStudent} createTeacher = {this.createTeacher} createClass = {this.createClass} />
+        createStudent = {this.createStudent} createTeacher = {this.createTeacher} createClass = {this.createClass} createAdmin = {this.createAdmin}
+        editStudent = {this.editStudent} editTeacher = {this.editTeacher} editClass = {this.editClass} editAdmin = {this.editAdmin} />
       </div>
     );
   }
