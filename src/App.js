@@ -6,6 +6,7 @@ import Home from "./Home";
 import {base} from "./config/Fire.js";
 
 // TODO: Connect teacher class list as attribute
+//TODO: Change read/write rules
 
 class App extends Component {
   constructor(props) {
@@ -14,8 +15,19 @@ class App extends Component {
       admins: [],
       teachers: [],
       students: [], 
-      classes: []
+      classes: [],
+      user: false
     }
+  }
+
+  authListener() {
+    base.initializedApp.auth().onAuthStateChanged((user) => {
+      if(user){
+        this.setState({user});
+      } else {
+        this.setState({user: null});
+      }
+    })
   }
 
   // Create Functions
@@ -29,7 +41,7 @@ class App extends Component {
         ID: studentID,
         firstName: firstName,
         lastName: lastName,
-        currentTeacher: ["no current teachers"]
+        classList: ["no current classes"]
       };
       this.setState({students});
     }
@@ -69,7 +81,35 @@ class App extends Component {
 
   // Edit Functions
   
-  editStudent = () => {}
+  editStudent = (ID, firstName, lastName, addClass, deleteClass) => {
+    
+    let currentStudentList = this.state.students
+    let currentStudent = currentStudentList[ID];
+
+    if(firstName){
+    };
+
+    if(lastName){
+    };
+
+    if(addClass){
+      if(currentStudent.classList[0] === "no current classes") {
+        currentStudent.classList[0] = addClass;
+      } else {
+        currentStudent.classList.push(addClass);
+      }
+    };
+
+    if (deleteClass) {
+
+    };
+
+    currentStudentList[ID] = currentStudent;
+
+    this.setState({
+      students: currentStudentList
+    })
+  }
 
   editTeacher = (ID, firstName, lastName, addClassList, deleteClassList) => {
 
@@ -109,8 +149,33 @@ class App extends Component {
 
   editAdmin = () => {}
 
-  editClass = (ID, firstName, lastName, addClass, deleteClass) => {
-    
+  editClass = (ID, name, teacher, addStudent, deleteStudent) => {
+    let currentClassList = this.state.classes
+    let currentClass = currentClassList[ID];
+
+    if(name){
+    };
+
+    if(teacher){
+    };
+
+    if(addStudent){
+      if(currentClass.students[0] === "no current students") {
+        currentClass.students[0] = addStudent;
+      } else {
+        currentClass.students.push(addStudent);
+      }
+    };
+
+    if (deleteStudent) {
+
+    };
+
+    currentClassList[ID] = currentClass;
+
+    this.setState({
+      classes: currentClassList
+    })
   }
 
   // Delete
@@ -143,30 +208,16 @@ class App extends Component {
     base.removeBinding(this.teachersRef);
     base.removeBinding(this.classesRef);
   }
-  // componentDidMount() {
-  //   // this.authListener();
-  // }
-
-  // authListener() {
-  //   fire.auth().onAuthStateChanged((user) => {
-  //     // console.log(user);
-  //     if(user){
-  //       this.setState({user});
-  //       // localStorage.setItem('user', user.uid);
-  //     } else {
-  //       this.setState({user: null});
-  //       // localStorage.removeItem('user')
-  //     }
-  //   });
-  // }
+  componentDidMount() {
+    this.authListener();
+  }
 
   render() {
     return (
       <div className="App">
-        {/* {this.state.user ? (<Home/>) : (<Login />)} */}
-        <Home studentsList = {this.state.students} teachersList = {this.state.teachers} classList = {this.state.classes}
+        {this.state.user ? (<Home studentsList = {this.state.students} teachersList = {this.state.teachers} classList = {this.state.classes}
         createStudent = {this.createStudent} createTeacher = {this.createTeacher} createClass = {this.createClass} createAdmin = {this.createAdmin}
-        editStudent = {this.editStudent} editTeacher = {this.editTeacher} editClass = {this.editClass} editAdmin = {this.editAdmin} />
+        editStudent = {this.editStudent} editTeacher = {this.editTeacher} editClass = {this.editClass} editAdmin = {this.editAdmin} />) : (<Login />)}
       </div>
     );
   }

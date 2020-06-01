@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SignUp from './SignUp';
 import UserList from "./UserList";
 import AssignStudent from "./AssignStudent";
+import {base} from "./config/Fire.js";
 
 class Home extends Component {
     constructor(props) {
@@ -30,6 +31,10 @@ class Home extends Component {
             isStudentView: this.state.isStudentView ? false : true
         })
     }
+
+    handleLogOut = (e) => {
+        base.initializedApp.auth().signOut();
+    }
     
     render() {
         return(
@@ -38,10 +43,12 @@ class Home extends Component {
                 {this.state.isSignUp ? <SignUp createStudent = {this.props.createStudent} createTeacher = {this.props.createTeacher} createClass = {this.props.createClass} teachers = {this.props.teachersList} editTeacher = {this.props.editTeacher} /> : null}<br/>
                 
                 <button onClick = {this.toggleAssignStudent}>Assign Student to Class</button>
-                {this.state.isAssignStudent ? <AssignStudent editStudent = {this.props.editStudent} classes = {this.props.classList} students = {this.props.studentsList}/> : null}<br/><br/>
+                {this.state.isAssignStudent ? <AssignStudent editStudent = {this.props.editStudent} editClass = {this.props.editClass} classes = {this.props.classList} students = {this.props.studentsList}/> : null}<br/><br/>
             
                 <button onClick = {this.toggleStudentView}>View List of All Enrolled Students</button>
-                {this.state.isStudentView ? <UserList className = "studentList" list = {this.props.studentsList}/> : null}
+                {this.state.isStudentView ? <UserList className = "studentList" list = {this.props.studentsList}/> : null}<br/><br/>
+
+                <button onClick = {this.handleLogOut}>Log Out</button>
             </div>
             
         );

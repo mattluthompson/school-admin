@@ -17,7 +17,7 @@ class AssignStudent extends Component {
         let value = target.value.slice(1,4);
 
         if(name === "classID") {
-            value = target.value.slice(1,5);
+            value = target.value.slice(1,4);
         } 
 
         this.setState({
@@ -26,10 +26,25 @@ class AssignStudent extends Component {
     }
 
     handleSubmit = () => {
-        this.props.editStudent();
+        let classObject = {
+            ID: this.props.classes[this.state.classID].ID,
+            name: this.props.classes[this.state.classID].name,
+            teacher: this.props.classes[this.state.classID].teacher
+        }
+
+        this.props.editStudent(this.state.studentID, null, null, classObject, null);
+
+        let studentObject = {
+            ID: this.props.students[this.state.studentID].ID,
+            firstName: this.props.students[this.state.studentID].firstName,
+            lastName: this.props.students[this.state.studentID].lastName
+        }
+        
+        this.props.editClass(this.state.classID, null, null, studentObject, null)
     }
 
     render() {
+        console.log(mapList(this.props.classes))
         return(
             <div>
                 <form>
@@ -45,7 +60,7 @@ class AssignStudent extends Component {
                         Class:{" "}
                         <select  name = "classID" onChange = {this.handleInputChange} required>
                         {mapList(this.props.classes).map((classroom, index) => {
-                          return <option key = {index}>{"("+classroom[0]+") "+classroom[2]}</option>;
+                          return <option key = {index}>{"("+classroom[0]+") "+classroom[2]+" - "+classroom[4][3]+", "+classroom[4][2]}</option>;
                         })}
                         </select>
                     </label><br />
