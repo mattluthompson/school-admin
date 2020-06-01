@@ -8,13 +8,20 @@ class Home extends Component {
         super(props);
         this.state = {
             isSignUp: false,
-            isStudentView: false
+            isStudentView: false,
+            isAssignStudent: false
         }
     }
 
     toggleSignUp = () => {
         this.setState({
             isSignUp: this.state.isSignUp ? false : true
+        })
+    }
+
+    toggleAssignStudent = () => {
+        this.setState({
+            isAssignStudent: this.state.isAssignStudent ? false : true
         })
     }
 
@@ -27,11 +34,14 @@ class Home extends Component {
     render() {
         return(
             <div>
-                <button onClick = {this.toggleSignUp}>Add Member</button><br/>
+                <button onClick = {this.toggleSignUp}>Add</button><br/>
                 {this.state.isSignUp ? <SignUp createStudent = {this.props.createStudent} createTeacher = {this.props.createTeacher} createClass = {this.props.createClass} teachers = {this.props.teachersList} editTeacher = {this.props.editTeacher} /> : null}<br/>
+                
+                <button onClick = {this.toggleAssignStudent}>Assign Student to Class</button>
+                {this.state.isAssignStudent ? <AssignStudent editStudent = {this.props.editStudent} classes = {this.props.classList} students = {this.props.studentsList}/> : null}<br/><br/>
+            
                 <button onClick = {this.toggleStudentView}>View List of All Enrolled Students</button>
                 {this.state.isStudentView ? <UserList className = "studentList" list = {this.props.studentsList}/> : null}
-                <AssignStudent />
             </div>
             
         );

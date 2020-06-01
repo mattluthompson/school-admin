@@ -109,7 +109,9 @@ class App extends Component {
 
   editAdmin = () => {}
 
-  editClass = () => {}
+  editClass = (ID, firstName, lastName, addClass, deleteClass) => {
+    
+  }
 
   // Delete
 
@@ -162,7 +164,7 @@ class App extends Component {
     return (
       <div className="App">
         {/* {this.state.user ? (<Home/>) : (<Login />)} */}
-        <Home studentsList = {this.state.students} teachersList = {this.state.teachers} 
+        <Home studentsList = {this.state.students} teachersList = {this.state.teachers} classList = {this.state.classes}
         createStudent = {this.createStudent} createTeacher = {this.createTeacher} createClass = {this.createClass} createAdmin = {this.createAdmin}
         editStudent = {this.editStudent} editTeacher = {this.editTeacher} editClass = {this.editClass} editAdmin = {this.editAdmin} />
       </div>
