@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {mapList} from "./mapList";
+import {mapList} from "../../mapList";
 
 class ClassSignUp extends Component {
     constructor(props) {
@@ -17,7 +17,9 @@ class ClassSignUp extends Component {
         let value = target.value;
 
         if (name === "classTeacher"){
-          value = this.props.teachers[value.slice(1,4)];
+          const beginningIndex = value.indexOf("(") + 1
+          const endingIndex = value.indexOf(")")
+          value = this.props.teachers[value.slice(beginningIndex,endingIndex)]
         }
 
         this.setState({

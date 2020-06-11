@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import SignUp from './SignUp';
-import UserList from "./UserList";
+import SignUp from './SignUpComponents/SignUp';
+import UserList from "../UserList";
 import AssignStudent from "./AssignStudent";
-import {base} from "./config/Fire.js";
+import {base} from "../config/Fire.js";
 
 class Home extends Component {
     constructor(props) {

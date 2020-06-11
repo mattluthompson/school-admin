@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './App.css';
 // import fire from './config/Fire';
-import Login from "./Login";
-import Home from "./Home";
+import Login from "./Components/Login";
+import Home from "./Components/Home";
 import {base} from "./config/Fire.js";
 
 // TODO: Connect teacher class list as attribute

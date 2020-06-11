@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {base} from "./config/Fire.js";
+import {base} from "../config/Fire.js";
 
 class Login extends Component {
     constructor(props) {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {mapList} from './mapList';
+import {mapList} from '../mapList';
 
 class AssignStudent extends Component {
 
@@ -14,11 +14,11 @@ class AssignStudent extends Component {
     handleInputChange = (event) => {
         const target = event.target;
         const name = target.name;
-        let value = target.value.slice(1,4);
 
-        if(name === "classID") {
-            value = target.value.slice(1,4);
-        } 
+        const beginningIndex = target.value.indexOf("(") + 1
+        const endingIndex = target.value.indexOf(")")
+
+        let value = target.value.slice(beginningIndex,endingIndex);
 
         this.setState({
           [name]: value
@@ -44,7 +44,6 @@ class AssignStudent extends Component {
     }
 
     render() {
-        console.log(mapList(this.props.classes))
         return(
             <div>
                 <form>
